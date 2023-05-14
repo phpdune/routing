@@ -78,7 +78,7 @@ class Router implements RouterInterface
     }
     /**
      * set the routes
-     * 
+     *
      * @param  string  $route
      * @param  string  $method
      * @param callable|string|array<string,string> $action
@@ -105,7 +105,7 @@ class Router implements RouterInterface
         foreach($controllers as $controller) {
             $reflection = new ReflectionClass($controller);
             if(!$reflection->implementsInterface(Controller::class)) {
-              throw new InvalidController("Cannot resolve this class, this class must implements routing controller interface");
+                throw new InvalidController("Cannot resolve this class, this class must implements routing controller interface");
             }
             foreach($reflection->getMethods() as $method) {
                 $attributes = $method->getAttributes(Route::class, ReflectionAttribute::IS_INSTANCEOF);
@@ -121,17 +121,17 @@ class Router implements RouterInterface
     }
     /**
      * set the route partials by attributes
-     * 
+     *
      * @param mixed $route
      */
     private function setAttributePartials(mixed $route): void
     {
-      if(!is_null($route->name)) {
-        self::$names[$route->name] = $route->path;
-      }
-      if(!is_null($route->middleware)) {
-        self::$middlewares[$route->path] = $route->middleware;
-      }
+        if(!is_null($route->name)) {
+            self::$names[$route->name] = $route->path;
+        }
+        if(!is_null($route->middleware)) {
+            self::$middlewares[$route->path] = $route->middleware;
+        }
     }
     /**
      * @param  string  $route
@@ -223,9 +223,9 @@ class Router implements RouterInterface
 
     /**
      * set name for routes
-     * 
+     *
      * @param  string  $name
-     * 
+     *
      * @return self
      */
     public function name(string $name): self
@@ -235,9 +235,9 @@ class Router implements RouterInterface
     }
     /**
      * set middlware for route
-     * 
+     *
      * @param  string  $key
-     * 
+     *
      * @return self
      */
     public function middleware(string $key): self
@@ -250,7 +250,7 @@ class Router implements RouterInterface
      */
      public function useAttributes(): void
      {
-       $this->setAttributeRoute();
+         $this->setAttributeRoute();
      }
     /**
      * proceeds the route to run
@@ -297,25 +297,25 @@ class Router implements RouterInterface
      * get the controllers from controller dir
      *
      * @return array<int,string>
-     */     
+     */
      private function mapControllers(): array
      {
-       if(!empty($this->controllerMap)) {
-         return $this->controllerMap;
-       }
-      $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(PATH.'/app/controllers'));
+         if(!empty($this->controllerMap)) {
+             return $this->controllerMap;
+         }
+         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(PATH.'/app/controllers'));
 
-        foreach ($iterator as $file) {
-        if ($file->isFile()) {
-        $name = str_replace(PATH,'',$file->getPathname());
-        $name = str_replace('.php','',$name);
-        $name = str_replace('/',' ',$name);
-        $name = ucwords($name);
-        $name = str_replace(' ','\\',$name);
-        $this->controllerMap[] = $name;
-        }
-        }
-    return $this->controllerMap;
+         foreach ($iterator as $file) {
+             if ($file->isFile()) {
+                 $name = str_replace(PATH, '', $file->getPathname());
+                 $name = str_replace('.php', '', $name);
+                 $name = str_replace('/', ' ', $name);
+                 $name = ucwords($name);
+                 $name = str_replace(' ', '\\', $name);
+                 $this->controllerMap[] = $name;
+             }
+         }
+         return $this->controllerMap;
      }
 
     /**

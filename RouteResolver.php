@@ -13,7 +13,6 @@ use Dune\Routing\Router as Route;
 use Dune\Http\Middleware\Middleware;
 use Dune\Http\Middleware\MiddlewareStack;
 
-
 class RouteResolver extends RouteActionCaller
 {
     /**
@@ -46,10 +45,10 @@ class RouteResolver extends RouteActionCaller
                     "Exception : {$requestMethod} Method Not Supported For This Route, Supported Method {$route["method"]}"
                 );
             }
-            if (preg_match('/^' . $regex . '$/',$url['path'], $matches) && $route["method"] == $requestMethod) {
-              $key = Route::$middlewares[$route['route']] ?? null;
-              $middlewares = $this->getMiddleware($key);
-              $this->runMiddlewares($middlewares);
+            if (preg_match('/^' . $regex . '$/', $url['path'], $matches) && $route["method"] == $requestMethod) {
+                $key = Route::$middlewares[$route['route']] ?? null;
+                $middlewares = $this->getMiddleware($key);
+                $this->runMiddlewares($middlewares);
 
                 $action = $route["action"];
 
@@ -88,16 +87,16 @@ class RouteResolver extends RouteActionCaller
             $middlewareBag = new \App\Middleware\RegisterMiddleware();
             $default = $middlewareBag->defaultMiddlewares;
             if(is_null($middleware)) {
-              return $default;
+                return $default;
             }
             $middlewares = $middlewareBag->middleware;
             foreach($middlewares as $key => $value) {
-              if($key == $middleware) {
-                return array_merge($default,$value);
-              }
-              throw new MiddlewareNotFound(
-                "Exception : Middleware {$middleware} Not Found"
-            );
+                if($key == $middleware) {
+                    return array_merge($default, $value);
+                }
+                throw new MiddlewareNotFound(
+                    "Exception : Middleware {$middleware} Not Found"
+                );
             }
         }
         return null;
@@ -119,12 +118,12 @@ class RouteResolver extends RouteActionCaller
      */
     protected function runMiddlewares(array $middlewares): void
     {
-       $middlewareDispatcher = new Middleware(new MiddlewareStack());
-       if(is_array($middlewares)) {
-         foreach($middlewares as $middleware) {
-           $middlewareDispatcher->add(new $middleware);
-         }
-         $middlewareDispatcher->run();
-       }
+        $middlewareDispatcher = new Middleware(new MiddlewareStack());
+        if(is_array($middlewares)) {
+            foreach($middlewares as $middleware) {
+                $middlewareDispatcher->add(new $middleware());
+            }
+            $middlewareDispatcher->run();
+        }
     }
 }

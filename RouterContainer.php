@@ -21,14 +21,14 @@ trait RouterContainer
      */
     public function __setUp()
     {
-      if(!$this->container) {
-        if(class_exists(App::class)) {
-          $container = App::container();
-        } else {
-          $containerBuilder = new ContainerBuilder();
-          $container = $containerBuilder->build();
+        if(!$this->container) {
+            if(class_exists(App::class)) {
+                $container = App::container();
+            } else {
+                $containerBuilder = new ContainerBuilder();
+                $container = $containerBuilder->build();
+            }
+            $this->container = $container;
         }
-        $this->container = $container;
-      }
     }
 }

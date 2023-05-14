@@ -10,16 +10,16 @@ use Dune\Routing\Attributes\Route;
 #[Attribute(Attribute::TARGET_METHOD|Attribute::IS_REPEATABLE)]
 class Put extends Route
 {
-  /**
-   * route details setting for PUT method
-   * 
-   * @param string $path
-   * @param ?string $name
-   * @param ?string $middleware
-   * 
-   */
-  public function __construct(string $path, string $name = null, string $middleware = null)
-  {
-    parent::__construct('PUT', $path, $name, $middleware);
-  }
+    /**
+     * route details setting for PUT method
+     *
+     * @param string $path
+     * @param ?string $name
+     * @param ?string $middleware
+     *
+     */
+    public function __construct(string $path, string $name = null, string $middleware = null)
+    {
+        parent::__construct('PUT', $path, $name, $middleware);
+    }
 }
